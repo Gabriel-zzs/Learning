@@ -1,73 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.macro.mall</groupId>
-    <artifactId>mall-learning</artifactId>
+    <artifactId>mall-tiny-04</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>mall-tiny-04</module>
-        <module>mall-tiny-docker</module>
-    </modules>
+    <name>mall-tiny-04</name>
+    <description>Demo project for Spring Boot</description>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.macro.mall</groupId>
+        <artifactId>mall-learning</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <skipTests>true</skipTests>
-        <docker.host>http://192.168.3.101:2375</docker.host>
-        <docker.maven.plugin.version>0.40.2</docker.maven.plugin.version>
-        <pagehelper-starter.version>1.4.5</pagehelper-starter.version>
-        <pagehelper.version>5.3.2</pagehelper.version>
-        <druid.version>1.2.14</druid.version>
-        <hutool.version>5.8.9</hutool.version>
-        <springfox-swagger.version>3.0.0</springfox-swagger.version>
-        <swagger-models.version>1.6.0</swagger-models.version>
-        <swagger-annotations.version>1.6.0</swagger-annotations.version>
-        <mybatis-generator.version>1.4.1</mybatis-generator.version>
-        <mybatis.version>3.5.10</mybatis.version>
-        <mybatis-starter.version>2.2.2</mybatis-starter.version>
-        <mysql-connector.version>8.0.29</mysql-connector.version>
-        <spring-data-commons.version>2.7.5</spring-data-commons.version>
-        <jjwt.version>0.9.1</jjwt.version>
-        <aliyun-oss.version>2.5.0</aliyun-oss.version>
-        <logstash-logback.version>7.2</logstash-logback.version>
-        <minio.version>8.4.5</minio.version>
-        <jaxb-api.version>2.3.1</jaxb-api.version>
-    </properties>
-
     <dependencies>
-        <!--解决JDK 11 兼容性问题-->
+        <!--SpringBoot通用依赖模块-->
         <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>${jaxb-api.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--MyBatis分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+        <!--集成druid连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+        <!-- MyBatis 生成器 -->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <!--Mysql数据库驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+        <!--Lombok依赖-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--Hutool工具类库-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.9</version>
+        </dependency>
+        <!--springfox swagger官方Starter-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!--Spring Data Redis依赖配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--SpringSecurity依赖配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!--JWT(Json Web Token)登录支持-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <!--Elasticsearch相关依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <!---MongoDB相关依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <!--Spring AMQP依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!--MinIO Java SDK依赖-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.4.5</version>
         </dependency>
     </dependencies>
 
-    <!--使用aliyun的Maven镜像源提升下载速度-->
-    <repositories>
-        <repository>
-            <id>aliyunmaven</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </repository>
-        <repository>
-            <id>central2</id>
-            <name>central2</name>
-            <url>https://repo1.maven.org/maven2/</url>
-        </repository>
-    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
